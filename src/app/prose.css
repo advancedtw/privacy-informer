@@ -1,0 +1,224 @@
+/* /app/prose.css */
+/* Contains custom styles for elements within a .prose container, */
+/* using the application's theme variables. */
+
+/* Optional: Wrap in a layer for better control */
+@layer components {
+
+    /* --- Base Prose Styles --- */
+    .prose {
+      color: var(--foreground);
+    }
+  
+    /* --- Headings --- */
+    .prose h1,
+    .prose h2,
+    .prose h3,
+    .prose h4,
+    .prose h5,
+    .prose h6 {
+      color: var(--foreground);
+      /* Adjust margins, font sizes, weights as needed */
+      @apply mt-8 mb-4 font-semibold leading-tight;
+    }
+    .prose h1 { @apply text-3xl; }
+    .prose h2 { @apply text-2xl; }
+    .prose h3 { @apply text-xl; }
+    .prose h4 { @apply text-lg; }
+    /* Dark mode colors usually adapt via var(--foreground) */
+  
+  
+    /* --- Paragraphs --- */
+    .prose p {
+      color: var(--foreground);
+      @apply my-4 leading-relaxed; /* Example spacing/line-height */
+    }
+    /* Dark mode adapts via var(--foreground) */
+  
+  
+    /* --- Links --- */
+    .prose a {
+      color: var(--primary);
+      @apply font-medium no-underline transition-opacity duration-150 ease-in-out hover:opacity-80 hover:underline;
+    }
+    /* Dark mode adapts via var(--primary) */
+    /* Dark hover potentially needs tweak if opacity isn't enough */
+    .dark .prose a:hover {
+       @apply opacity-75; /* Example adjustment for dark */
+    }
+  
+  
+    /* --- Bold / Italic --- */
+    .prose strong {
+      color: var(--foreground); /* Or a slightly bolder var if you have one */
+      @apply font-semibold;
+    }
+    .prose em {
+        /* Usually inherits color fine */
+    }
+  
+  
+    /* --- Blockquotes --- */
+    .prose blockquote {
+      border-left-color: var(--primary);
+      color: var(--muted-foreground);
+      @apply my-6 pl-4 italic border-l-4;
+    }
+    /* Remove default quote marks often added by plugins */
+     .prose blockquote p:first-of-type::before { content: none; }
+     .prose blockquote p:last-of-type::after { content: none; }
+    /* Dark mode adapts via variables */
+    .dark .prose blockquote {
+      border-left-color: var(--primary);
+      color: var(--muted-foreground);
+    }
+  
+  
+    /* --- Horizontal Rules --- */
+    .prose hr {
+      border-color: var(--border);
+      @apply my-8 border-t;
+    }
+    /* Dark mode adapts via var(--border) */
+  
+  
+    /* --- Lists (Regular) --- */
+    .prose ul {
+      list-style-type: disc;
+      @apply pl-6 my-4;
+    }
+    .prose ol {
+      list-style-type: decimal;
+      @apply pl-6 my-4;
+    }
+    .prose li {
+      @apply my-1; /* Controls space between items */
+       color: var(--foreground); /* Ensure list item text is visible */
+    }
+  
+    /* --- List Markers (Regular Lists Only) --- */
+    .prose ul > li:not(.task-list-item)::marker,
+    .prose ol > li::marker {
+      color: var(--muted-foreground); /* Or var(--foreground) */
+    }
+    .dark .prose ul > li:not(.task-list-item)::marker,
+    .dark .prose ol > li::marker {
+      color: var(--muted-foreground); /* Or var(--foreground) */
+    }
+  
+  
+    /* --- Task Lists --- */
+    .prose ul.contains-task-list {
+      @apply pl-0 my-4; /* Adjusted padding for task lists */
+      list-style-type: none;
+    }
+    .prose li.task-list-item {
+      list-style-type: none; /* No bullet */
+      @apply flex items-center my-1 gap-2; /* Flex align checkbox and text */
+       color: var(--foreground); /* Ensure text color */
+    }
+    .prose li.task-list-item input[type="checkbox"] {
+      @apply my-0 flex-shrink-0 h-4 w-4; /* Reset margin, prevent shrink, standard size */
+       /* Ensure checkbox uses theme colors (might need specific styling depending on browser/defaults) */
+      accent-color: var(--primary);
+      @apply rounded border-border;
+    }
+  
+  
+    /* --- Inline Code --- */
+    .prose code:not(pre code) {
+      background-color: var(--muted);
+      color: var(--primary); /* Or a specific code color variable */
+      @apply text-sm font-mono px-1.5 py-0.5 rounded-md mx-px;
+    }
+    .dark .prose code:not(pre code) {
+      background-color: var(--muted); /* Adapts */
+      color: var(--primary); /* Adapts */
+    }
+  
+  
+    /* --- Code Blocks --- */
+    .prose pre {
+      background-color: var(--muted);
+      color: var(--foreground); /* Base text color inside block */
+      @apply my-6 p-4 rounded-lg overflow-x-auto shadow-sm text-sm;
+    }
+    .prose pre code {
+      /* Reset inline code styles */
+      background-color: transparent;
+      color: inherit;
+      padding: 0;
+      margin: 0;
+      border-radius: 0;
+      font-size: inherit;
+      font-weight: inherit;
+      @apply font-mono leading-relaxed;
+    }
+     /* Optional: Specific color for code text inside pre, if different from var(--foreground) */
+     /* .prose pre code { color: var(--code-block-text); } */
+    .dark .prose pre {
+       background-color: var(--muted); /* Adapts */
+       color: var(--foreground); /* Adapts */
+    }
+     /* .dark .prose pre code { color: var(--code-block-text); } */
+  
+  
+    /* --- Table Styles --- */
+    .prose table {
+      @apply w-full my-6 border-collapse text-sm;
+      border: 1px solid var(--border);
+    }
+    .prose thead {
+      background-color: var(--muted);
+      border-bottom: 2px solid var(--border);
+      
+    }
+    .prose th {
+      @apply px-4 py-2 text-left font-semibold;
+      color: var(--foreground);
+      border-right: 1px solid var(--border);
+      background-color: var(--muted-foreground);
+
+    }
+    .prose th:last-child {
+      border-right: none;
+    }
+    .prose tbody tr {
+      border-bottom: 1px solid var(--border);
+      transition: background-color 0.15s ease-in-out;
+    }
+    .prose tbody tr:last-child {
+      border-bottom: none;
+    }
+    .prose tbody tr:nth-child(even) {
+      background-color: var(--muted);
+    }
+    .prose tbody tr:hover {
+      background-color: color-mix(in srgb, var(--accent) 20%, transparent); /* Adjust hover */
+    }
+    .prose tbody tr:nth-child(even):hover {
+       background-color: color-mix(in srgb, var(--accent) 20%, transparent); /* Match hover */
+    }
+    .prose td {
+      @apply px-4 py-2 text-left align-top;
+      color: var(--foreground);
+      border-right: 1px solid var(--border);
+    }
+    .prose td:last-child {
+      border-right: none;
+    }
+  
+    /* Dark Mode Table Adjustments */
+    .dark .prose table { border-color: var(--border); }
+    .dark .prose thead { background-color: var(--muted); border-bottom-color: var(--border); }
+    .dark .prose th { border-right-color: var(--border); }
+    .dark .prose tbody tr { border-bottom-color: var(--border); }
+    .dark .prose tbody tr:nth-child(even) { background-color: var(--muted); }
+    .dark .prose tbody tr:hover,
+    .dark .prose tbody tr:nth-child(even):hover {
+       background-color: color-mix(in srgb, var(--accent) 25%, transparent); /* Adjust dark hover */
+    }
+    .dark .prose td { border-right-color: var(--border); }
+  
+  
+  } /* End optional @layer components */
